@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.io.FileUtils;
+
+import org.pytorch.serve.archive.model.*;
 import org.pytorch.serve.plugins.dragonfly.config.DragonflyEndpointConfig;
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
+import org.pytorch.serve.plugins.dragonfly.objectstorage.ObjectStorageClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +30,17 @@ public class DragonflyUtils implements FileLoadUtils {
     private String configFileName = "d7y_endpoint.json";
 
     private DragonflyEndpointConfig dragonflyEndpointConfig;
+    private ObjectStorageConfig objectStorageConfig;
+    private ObjectStorageClient objectStorageClient;
+
 
     public DragonflyUtils() throws Exception {
         //TODO init config
         initConfig();
         //TODO init client
+        objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
+        
+        objectStorageClient = ObjectStorageClient.createClient(objectStorageConfig);
 
     }
 
@@ -39,12 +48,12 @@ public class DragonflyUtils implements FileLoadUtils {
     /**
      * Copy model from S3 url to local model store
      */
-    public void copyURLToFile(String fileName ,File modelLocation) throws IOException {
+    public void copyURLToFile(String fileName ,File modelLocation) throws IOException,ModelException {
         // get signURL
-        String bucketName = dragonflyEndpointConfig.getObjectStorageConfig().getBucketName();
-        String objectKey = fileName;
-        URL url = null;
-        url = createSigURL(bucketName, objectKey);
+        URL url = createSigURL(objectStorageConfig, fileName);
+        if (url == null) {
+            throw new ModelNotFoundException("empty url");
+        }
         createD7yDownloadHttpRequest(url, modelLocation);
     }
 
@@ -53,9 +62,11 @@ public class DragonflyUtils implements FileLoadUtils {
         FileUtils.copyURLToFile(url, modelLocation);
     }
 
-    public static URL createSigURL(String bucketName, String objectKey) throws MalformedURLException {
-        //example url
-       return new URL("https://torchserve.pytorch.org/mar_files/squeezenet1_1.mar");
+    public URL createSigURL(ObjectStorageConfig objectStorageConfig, String fileName) throws FileNotFoundException,MalformedURLException {
+        URL signedURL = null;
+        signedURL = objectStorageClient.getPresignedURL(objectStorageConfig, fileName);
+        System.out.println("Signed URL: " + signedURL);
+        return signedURL;
     }
 
     public void initConfig()  {
@@ -74,15 +85,15 @@ public class DragonflyUtils implements FileLoadUtils {
             }else{
                 logger.error("do not support os type :" + osType);
             }
-            try{
-                Gson gson = new Gson();
-                JsonReader reader = new JsonReader(new FileReader(configPath));
-                dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
-            }catch (JsonParseException e){
-                logger.error("wrong format in config :",e);
-            }catch (FileNotFoundException e){
-                logger.error("not found config file :",e);
-            }
+        }
+        try{
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader(configPath));
+            dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
+        }catch (JsonParseException e){
+            logger.error("wrong format in config :",e);
+        }catch (FileNotFoundException e){
+            logger.error("not found config file :",e);
         }
     }
 

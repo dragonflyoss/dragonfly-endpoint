@@ -13,6 +13,23 @@ public class ObjectStorageConfig {
     private String accessKey;
     @SerializedName("secretKey")
     private String secretKey;
+    @SerializedName("project_id")
+    private String projectId;
+    @SerializedName("service_account_path")
+    private String serviceAccountPath;
+    @SerializedName("connection_string")
+    private String connectionString;
+    @SerializedName("container_name")
+    private String containerName;
+    @SerializedName("end_point")
+    private String endPoint;
+    @SerializedName("access_key_id")
+    private String accessKeyId;
+    @SerializedName("access_key_secret")
+    private String accessKeySecret;
+
+
+    
     public String getType() {
         return type;
     }
@@ -51,5 +68,34 @@ public class ObjectStorageConfig {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public String getServiceAccountPath() {
+        return serviceAccountPath;
+    }
+
+    public String getConnectionString() {
+        return connectionString;
+    }
+
+
+    public String getContainerName() {
+        return containerName;
+    }
+
+    public String getEendPoint() {
+        return endPoint;
+    }
+
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
     }
 }
