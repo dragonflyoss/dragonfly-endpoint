@@ -27,13 +27,13 @@ public class Dragonfly extends ModelServerEndpoint {
     public void doPost(Request req, Response rsp, Context ctx) {
         try {
             DragonflyModelRequest dragonflyModelRequest = new DragonflyModelRequest(req);
-            ModelRegisterUtils registerUtil = new ModelRegisterUtils(new DragonflyUtils());
+            ModelRegisterUtils registerUtil = new ModelRegisterUtils(DragonflyUtils.getInstance());
             StatusResponse statusResponse = registerUtil.downLoadAndRegisterModel(dragonflyModelRequest);
-            if(statusResponse != null){
+            if (statusResponse != null) {
                 rsp.setStatus(statusResponse.getHttpResponseCode());
                 byte[] success = String.format("{\n\t\"Status\": \"%s\"\n}\n", statusResponse.getStatus()).getBytes(StandardCharsets.UTF_8);
                 rsp.getOutputStream().write(success);
-            }else{
+            } else {
                 rsp.setStatus(500);
             }
 

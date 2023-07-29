@@ -11,6 +11,9 @@ public class DragonflyModelRequest {
     @SerializedName("model_name")
     private String modelName;
 
+    @SerializedName("file_name")
+    private String fileName;
+
     @SerializedName("runtime")
     private String runtime;
 
@@ -41,6 +44,7 @@ public class DragonflyModelRequest {
     public DragonflyModelRequest(Request req) {
         Map<String, List<String>> parameterMap = req.getParameterMap();
         modelName = getDecoder(parameterMap, "model_name", null);
+        fileName = getDecoder(parameterMap, "file_name", null);
         runtime = getDecoder(parameterMap, "runtime", null);
         handler = getDecoder(parameterMap, "handler", null);
         batchSize = getDecoder(parameterMap, "batch_size", 1);
@@ -70,6 +74,14 @@ public class DragonflyModelRequest {
             return Integer.parseInt(values.get(0));
         }
         return defaultValue;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getModelName() {

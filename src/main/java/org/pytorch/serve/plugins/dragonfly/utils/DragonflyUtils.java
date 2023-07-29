@@ -21,25 +21,30 @@ import java.net.URL;
  */
 public class DragonflyUtils implements FileLoadUtils {
     public static final String configEnvName = "DRAGONFLY_ENDPOINT_CONFIG";
+    public static final String windowsDefaultConfigPath = "C:\\ProgramData\\dragonfly_endpoint\\";
+    public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint/";
+    public static final String macDefaultConfigPath = "/etc/dragonfly_endpoint/";
     private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
-
+    private static final String configFileName = "d7y_endpoint.json";
     private String configPath;
-    private String configFileName = "d7y_endpoint.json";
+    public static DragonflyUtils dragonflyUtils = new DragonflyUtils();
 
-    private DragonflyEndpointConfig dragonflyEndpointConfig;
+    private static DragonflyEndpointConfig dragonflyEndpointConfig;
 
-    public DragonflyUtils() throws Exception {
+    private DragonflyUtils() {
         //TODO init config
         initConfig();
         //TODO init client
-
     }
 
+    public static DragonflyUtils getInstance() {
+        return dragonflyUtils;
+    }
 
     /**
      * Copy model from S3 url to local model store
      */
-    public void copyURLToFile(String fileName ,File modelLocation) throws IOException {
+    public void copyURLToFile(String fileName, File modelLocation) throws IOException {
         // get signURL
         String bucketName = dragonflyEndpointConfig.getObjectStorageConfig().getBucketName();
         String objectKey = fileName;
@@ -48,40 +53,40 @@ public class DragonflyUtils implements FileLoadUtils {
         createD7yDownloadHttpRequest(url, modelLocation);
     }
 
-    public void createD7yDownloadHttpRequest(URL  url, File modelLocation) throws IOException {
+    public void createD7yDownloadHttpRequest(URL url, File modelLocation) throws IOException {
         //TODO copy by df7
         FileUtils.copyURLToFile(url, modelLocation);
     }
 
-    public static URL createSigURL(String bucketName, String objectKey) throws MalformedURLException {
+    public URL createSigURL(String bucketName, String objectKey) throws MalformedURLException {
         //example url
-       return new URL("https://torchserve.pytorch.org/mar_files/squeezenet1_1.mar");
+        return new URL("https://torchserve.pytorch.org/mar_files/squeezenet1_1.mar");
     }
 
-    public void initConfig()  {
+    public static void initConfig() {
         dragonflyEndpointConfig = new DragonflyEndpointConfig();
         dragonflyEndpointConfig.setObjectStorageConfig(new ObjectStorageConfig());
 
         String configPath = System.getenv(configEnvName);
-        if(configPath == null){
+        if (configPath == null) {
             String osType = System.getProperty("os.name").toUpperCase();
-            if( osType .contains("WINDOWS") ){
-                configPath = "C:\\ProgramData\\dragonfly_endpoint\\"+configFileName;
-            }else if( osType .contains("LINUX") ){
-                configPath = "/etc/dragonfly_endpoint/"+configFileName;
-            }else if( osType .contains("MAC") ){
-                configPath = "~/.dragonfly_endpoint/"+configFileName;
-            }else{
+            if (osType.contains("WINDOWS")) {
+                configPath = windowsDefaultConfigPath + configFileName;
+            } else if (osType.contains("LINUX")) {
+                configPath = linuxDefaultConfigPath + configFileName;
+            } else if (osType.contains("MAC")) {
+                configPath = macDefaultConfigPath + configFileName;
+            } else {
                 logger.error("do not support os type :" + osType);
             }
-            try{
+            try {
                 Gson gson = new Gson();
                 JsonReader reader = new JsonReader(new FileReader(configPath));
                 dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
-            }catch (JsonParseException e){
-                logger.error("wrong format in config :",e);
-            }catch (FileNotFoundException e){
-                logger.error("not found config file :",e);
+            } catch (JsonParseException e) {
+                logger.error("wrong format in config :", e);
+            } catch (FileNotFoundException e) {
+                logger.error("not found config file :", e);
             }
         }
     }

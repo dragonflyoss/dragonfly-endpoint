@@ -11,8 +11,8 @@ repositories {
 dependencies {
     implementation "com.google.code.gson:gson:${gson_version}"
     implementation "org.pytorch:torchserve-plugins-sdk:${torchserve_sdk_version}"
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.11.161'
-    implementation 'com.aliyun.oss:aliyun-sdk-oss:3.10.2'
+    implementation "com.amazonaws:aws-java-sdk-s3:${aws_java_sdk_s3_version}"
+    implementation "com.aliyun.oss:aliyun-sdk-oss:${aliyun_sdk_oss_version}"
     implementation name: 'archive', version:'1.0'
     implementation name: 'server', version:'1.0'
 }

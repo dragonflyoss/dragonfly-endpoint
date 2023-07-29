@@ -10,6 +10,7 @@ import org.pytorch.serve.http.BadRequestException;
 import org.pytorch.serve.http.ConflictStatusException;
 import org.pytorch.serve.http.InternalServerException;
 import org.pytorch.serve.http.StatusResponse;
+import org.pytorch.serve.http.messages.RegisterModelRequest;
 import org.pytorch.serve.plugins.dragonfly.DragonflyModelRequest;
 import org.pytorch.serve.snapshot.SnapshotManager;
 import org.pytorch.serve.util.ApiUtils;
@@ -49,8 +50,20 @@ public class ModelRegisterUtils {
     ModelRegisterUtils() {
     }
 
-    public StatusResponse downLoadAndRegisterModel(DragonflyModelRequest dragonflyModelRequest) throws DownloadArchiveException, ModelException, WorkerInitializationException, ExecutionException, InterruptedException {
-        String modelUrl = dragonflyModelRequest.getModelUrl();
+    public StatusResponse downLoadAndRegisterModel(DragonflyModelRequest dragonflyModelRequest) throws DownloadArchiveException, ModelException, WorkerInitializationException, ExecutionException, InterruptedException, IOException {
+        String fileName = dragonflyModelRequest.getFileName();
+
+        if (fileName == null) {
+            throw new BadRequestException("fileName is required.");
+        }
+        String modelStore = configManager.getModelStore();
+        if (modelStore == null) {
+            throw new ModelNotFoundException("Model store has not been configured.");
+        }
+        File modelLocation = new File(modelStore, fileName);
+        //TODO 需要设置临时文件
+        fileLoadUtil.copyURLToFile(fileName, modelLocation);
+
         String modelName = dragonflyModelRequest.getModelName();
         String runtime = dragonflyModelRequest.getRuntime();
         String handler = dragonflyModelRequest.getHandler();
@@ -59,11 +72,6 @@ public class ModelRegisterUtils {
         int initialWorkers = dragonflyModelRequest.getInitialWorkers();
         int responseTimeout = dragonflyModelRequest.getResponseTimeout();
         boolean s3SseKms = dragonflyModelRequest.getS3SseKms();
-
-        if (modelUrl == null) {
-            throw new BadRequestException("Parameter url is required.");
-        }
-
         if (responseTimeout == -1) {
             responseTimeout = ConfigManager.getInstance().getDefaultResponseTimeout();
         }
@@ -72,23 +80,14 @@ public class ModelRegisterUtils {
         if (runtime != null) {
             try {
                 runtimeType = Manifest.RuntimeType.fromValue(runtime);
-            } catch (IllegalArgumentException e) {
-                throw new BadRequestException(e);
+            } catch (IllegalArgumentException var12) {
+                throw new BadRequestException(var12);
             }
         }
+        String modelUrl = modelLocation.toString();
 
-        return handleRegister(
-                modelUrl,
-                modelName,
-                runtimeType,
-                handler,
-                batchSize,
-                maxBatchDelay,
-                responseTimeout,
-                initialWorkers,
-                dragonflyModelRequest.getSynchronous(),
-                false,
-                s3SseKms);
+        return ApiUtils.handleRegister(modelUrl, modelName, runtimeType, handler, batchSize, maxBatchDelay, responseTimeout, initialWorkers, dragonflyModelRequest.getSynchronous(), false, s3SseKms);
+
     }
 
     public static StatusResponse handleRegister(
@@ -199,17 +198,19 @@ public class ModelRegisterUtils {
                     createModelArchive(
                             modelName, url, handler, runtime, defaultModelName, s3SseKms);
         }
-
+        //modelManager
         Model tempModel = createModel(archive, batchSize, maxBatchDelay, responseTimeout, isWorkflowModel);
         String versionId = archive.getModelVersion();
 
         try {
+//            modelManager.createVersionedModel();
             createVersionedModel(tempModel, versionId);
         } catch (ConflictStatusException e) {
             if (!ignoreDuplicate) {
                 throw e;
             }
         }
+//        modelManager.setupModelDependencies();
         setupModelDependencies(tempModel);
         logger.info("Model {} loaded.", tempModel.getModelName());
 
