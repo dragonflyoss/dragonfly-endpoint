@@ -30,11 +30,19 @@ public class DragonflyUtils implements FileLoadUtils {
     public static DragonflyUtils dragonflyUtils = new DragonflyUtils();
 
     private static DragonflyEndpointConfig dragonflyEndpointConfig;
+    private DragonflyEndpointConfig dragonflyEndpointConfig;
+    private ObjectStorageConfig objectStorageConfig;
+    private ObjectStorageClient objectStorageClient;
+
 
     private DragonflyUtils() {
         //TODO init config
         initConfig();
         //TODO init client
+        objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
+
+        objectStorageClient = ObjectStorageClient.createClient(objectStorageConfig);
+
     }
 
     public static DragonflyUtils getInstance() {
@@ -44,23 +52,25 @@ public class DragonflyUtils implements FileLoadUtils {
     /**
      * Copy model from S3 url to local model store
      */
-    public void copyURLToFile(String fileName, File modelLocation) throws IOException {
+    public void copyURLToFile(String fileName ,File modelLocation) throws IOException,ModelException {
         // get signURL
-        String bucketName = dragonflyEndpointConfig.getObjectStorageConfig().getBucketName();
-        String objectKey = fileName;
-        URL url = null;
-        url = createSigURL(bucketName, objectKey);
+        URL url = createSigURL(objectStorageConfig, fileName);
+        if (url == null) {
+            throw new ModelNotFoundException("empty url");
+        }
         createD7yDownloadHttpRequest(url, modelLocation);
     }
 
-    public void createD7yDownloadHttpRequest(URL url, File modelLocation) throws IOException {
+    public void createD7yDownloadHttpRequest(URL  url, File modelLocation) throws IOException {
         //TODO copy by df7
         FileUtils.copyURLToFile(url, modelLocation);
     }
 
-    public URL createSigURL(String bucketName, String objectKey) throws MalformedURLException {
-        //example url
-        return new URL("https://torchserve.pytorch.org/mar_files/squeezenet1_1.mar");
+    public URL createSigURL(ObjectStorageConfig objectStorageConfig, String fileName) throws FileNotFoundException,MalformedURLException {
+        URL signedURL = null;
+        signedURL = objectStorageClient.getPresignedURL(objectStorageConfig, fileName);
+        System.out.println("Signed URL: " + signedURL);
+        return signedURL;
     }
 
     public static void initConfig() {
