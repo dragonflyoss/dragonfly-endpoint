@@ -2,10 +2,7 @@ package org.pytorch.serve.plugins.dragonfly.objectstorage;
 
 import java.net.URL;
 import java.time.Duration;
-
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
-
-
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -13,22 +10,17 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
+public class S3 implements ObjectStorage {
 
+    private S3Presigner presigner;
 
-public class AmazonS3Client implements ObjectStorageClient {
-
-    private S3Presigner s3Presigner;
-
-    public AmazonS3Client(ObjectStorageConfig objectStorageConfig) {
-
-        System.out.println("begin S3");
+    public S3(ObjectStorageConfig objectStorageConfig) {
         String accessKey = objectStorageConfig.getAccessKey();
         String secretKey = objectStorageConfig.getSecretKey();
         Region region = Region.of(objectStorageConfig.getRegion());
-
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
                         
-        s3Presigner = S3Presigner.builder()
+        presigner = S3Presigner.builder()
             .region(region)
             //.endpointOverride(URI.create("http://localhost:9000"))
             .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
@@ -37,7 +29,6 @@ public class AmazonS3Client implements ObjectStorageClient {
 
     @Override
     public URL getPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) {
-
         String bucketName = objectStorageConfig.getBucketName();
         
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
@@ -46,14 +37,14 @@ public class AmazonS3Client implements ObjectStorageClient {
                 .build();
 
         GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofHours(1))
+                .signatureDuration(Duration.ofMinutes(60))
                 .getObjectRequest(getObjectRequest)
                 .build();
 
-        URL signedUrl = s3Presigner
+        URL theUrl = presigner
                 .presignGetObject(getObjectPresignRequest)
                 .url();
-
-        return signedUrl;
+        presigner.close();
+        return theUrl;
     }
 }

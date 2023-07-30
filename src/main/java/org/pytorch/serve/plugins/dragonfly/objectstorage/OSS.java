@@ -10,10 +10,10 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 
 
-public class AliyunOSSClient implements ObjectStorageClient {
+public class OSS implements ObjectStorage {
     private OSS ossClient;
 
-    public AliyunOSSClient(ObjectStorageConfig objectStorageConfig) {
+    public OSS(ObjectStorageConfig objectStorageConfig) {
 
         String endPoint = objectStorageConfig.getEendPoint();
         String accessKeyId = objectStorageConfig.getAccessKeyId();
