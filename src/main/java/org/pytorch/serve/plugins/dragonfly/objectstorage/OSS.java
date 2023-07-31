@@ -5,13 +5,13 @@ import java.util.Date;
 
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
 
-import com.aliyun.oss.OSS;
+
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 
 
 public class OSS implements ObjectStorage {
-    private OSS ossClient;
+    private com.aliyun.oss.OSS ossClient;
 
     public OSS(ObjectStorageConfig objectStorageConfig) {
 

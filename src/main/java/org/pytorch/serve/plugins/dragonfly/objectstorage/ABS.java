@@ -21,7 +21,6 @@ public class ABS implements ObjectStorage {
         String connectionString = objectStorageConfig.getConnectionString(); // Azure Blob Storage Connection String
         String containerName = objectStorageConfig.getContainerName(); // Container Name
 
-        // 创建 Blob 存储客户端
         blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
         blobContainerClient = blobServiceClient.getBlobContainerClient(containerName);
     }
@@ -30,9 +29,11 @@ public class ABS implements ObjectStorage {
     public URL getPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) {
         String blobName = fileName; // Blob Name
     
-        URL signedUrl = blobContainerClient.generateSasBlobUrl(fileName, 
-                Duration.ofHours(1), // 预签名 URL 的有效期
-                BlobSasPermission.READ); // 该预签名 URL 的权限（这里为读权限）
+//        URL signedUrl = blobContainerClient.generateSasBlobUrl(fileName,
+//                Duration.ofHours(1),
+//                BlobSasPermission.READ);
+        //TODO
+        URL signedUrl = null;
 
 
         return signedUrl;

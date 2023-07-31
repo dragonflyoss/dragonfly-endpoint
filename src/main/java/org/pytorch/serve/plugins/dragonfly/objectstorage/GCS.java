@@ -21,7 +21,7 @@ public class GCS implements ObjectStorage {
 
     private Storage storage;
 
-    public GCS(ObjectStorageConfig objectStorageConfig) {
+    public GCS(ObjectStorageConfig objectStorageConfig) throws IOException {
         String projectId = objectStorageConfig.getProjectId();
         String serviceAccountPath = objectStorageConfig.getServiceAccountPath();
         

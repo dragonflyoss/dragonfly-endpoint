@@ -1,5 +1,6 @@
 package org.pytorch.serve.plugins.dragonfly.objectstorage;
 
+import java.io.IOException;
 import java.net.URL;
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
 
@@ -10,7 +11,7 @@ public interface ObjectStorage {
     public static final String ALIBABA_OBJECT_STORAGE_SERVICE = "oss";
     public static final String AZURE_BLOB_STORAGE = "abs";
 
-    static ObjectStorage createClient(ObjectStorageConfig Config) throws IllegalArgumentException {
+    static ObjectStorage createClient(ObjectStorageConfig Config) throws IllegalArgumentException, IOException {
         
         // type is type of object storage serve.
         String type = Config.getType();

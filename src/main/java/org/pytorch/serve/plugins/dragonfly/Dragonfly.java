@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 @Endpoint(
         urlPattern = "dragonfly",
         endpointType = EndpointTypes.MANAGEMENT,
-        description = "download through d7y.")
+        description = "download through dragonfly.")
 public class Dragonfly extends ModelServerEndpoint {
     @Override
     public void doPost(Request req, Response rsp, Context ctx) {
