@@ -12,12 +12,12 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.sas.BlobSasPermission;
 
 
-public class AzureBlobStorageClient implements ObjectStorageClient {
+public class ABS implements ObjectStorage {
 
     private BlobServiceClient blobServiceClient;
     private BlobContainerClient blobContainerClient;
 
-    public AzureBlobStorageClient(ObjectStorageConfig objectStorageConfig) {
+    public ABS(ObjectStorageConfig objectStorageConfig) {
         String connectionString = objectStorageConfig.getConnectionString(); // Azure Blob Storage Connection String
         String containerName = objectStorageConfig.getContainerName(); // Container Name
 

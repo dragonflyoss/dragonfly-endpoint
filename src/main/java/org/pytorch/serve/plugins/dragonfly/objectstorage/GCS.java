@@ -17,11 +17,11 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage.SignUrlOption;
 
 
-public class GoogleCloudStorageClient implements ObjectStorageClient {
+public class GCS implements ObjectStorage {
 
     private Storage storage;
 
-    public GoogleCloudStorageClient(ObjectStorageConfig objectStorageConfig) throws FileNotFoundException, IOException {
+    public GCS(ObjectStorageConfig objectStorageConfig) {
         String projectId = objectStorageConfig.getProjectId();
         String serviceAccountPath = objectStorageConfig.getServiceAccountPath();
         
