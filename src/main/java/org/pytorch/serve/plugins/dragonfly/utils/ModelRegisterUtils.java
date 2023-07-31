@@ -61,7 +61,8 @@ public class ModelRegisterUtils {
             throw new ModelNotFoundException("Model store has not been configured.");
         }
         File modelLocation = new File(modelStore, fileName);
-        //TODO 需要设置临时文件
+        logger.error("modelLocation:"+modelLocation);
+        //TODO set temp
         fileLoadUtil.copyURLToFile(fileName, modelLocation);
 
         String modelName = dragonflyModelRequest.getModelName();
@@ -442,7 +443,7 @@ public class ModelRegisterUtils {
             if (location.exists()) {
                 throw new FileAlreadyExistsException(archiveName);
             }
-            fileLoadUtil.copyURLToFile(archiveName, location);
+//            fileLoadUtil.copyURLToFile(archiveName, location);
         }
 
         return true;

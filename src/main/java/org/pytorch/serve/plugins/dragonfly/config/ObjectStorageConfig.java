@@ -9,9 +9,9 @@ public class ObjectStorageConfig {
     private String bucketName;
     @SerializedName("region")
     private String region;
-    @SerializedName("accessKey")
+    @SerializedName("access_key")
     private String accessKey;
-    @SerializedName("secretKey")
+    @SerializedName("secret_key")
     private String secretKey;
     @SerializedName("project_id")
     private String projectId;

@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import org.apache.commons.io.FileUtils;
+import org.pytorch.serve.archive.model.ModelException;
+import org.pytorch.serve.archive.model.ModelNotFoundException;
 import org.pytorch.serve.plugins.dragonfly.config.DragonflyEndpointConfig;
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
+import org.pytorch.serve.plugins.dragonfly.objectstorage.ObjectStorageClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,23 +28,23 @@ public class DragonflyUtils implements FileLoadUtils {
     public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint/";
     public static final String macDefaultConfigPath = "/etc/dragonfly_endpoint/";
     private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
-    private static final String configFileName = "d7y_endpoint.json";
+    private static final String configFileName = "dragonfly_endpoint.json";
     private String configPath;
     public static DragonflyUtils dragonflyUtils = new DragonflyUtils();
 
     private static DragonflyEndpointConfig dragonflyEndpointConfig;
-    private DragonflyEndpointConfig dragonflyEndpointConfig;
-    private ObjectStorageConfig objectStorageConfig;
+    private static ObjectStorageConfig objectStorageConfig;
     private ObjectStorageClient objectStorageClient;
 
 
     private DragonflyUtils() {
-        //TODO init config
-        initConfig();
-        //TODO init client
-        objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
 
-        objectStorageClient = ObjectStorageClient.createClient(objectStorageConfig);
+        initConfig();
+        try {
+            objectStorageClient = ObjectStorageClient.createClient(objectStorageConfig);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -52,7 +55,7 @@ public class DragonflyUtils implements FileLoadUtils {
     /**
      * Copy model from S3 url to local model store
      */
-    public void copyURLToFile(String fileName ,File modelLocation) throws IOException,ModelException {
+    public void copyURLToFile(String fileName, File modelLocation) throws IOException, ModelException {
         // get signURL
         URL url = createSigURL(objectStorageConfig, fileName);
         if (url == null) {
@@ -61,12 +64,12 @@ public class DragonflyUtils implements FileLoadUtils {
         createD7yDownloadHttpRequest(url, modelLocation);
     }
 
-    public void createD7yDownloadHttpRequest(URL  url, File modelLocation) throws IOException {
+    public void createD7yDownloadHttpRequest(URL url, File modelLocation) throws IOException {
         //TODO copy by df7
         FileUtils.copyURLToFile(url, modelLocation);
     }
 
-    public URL createSigURL(ObjectStorageConfig objectStorageConfig, String fileName) throws FileNotFoundException,MalformedURLException {
+    public URL createSigURL(ObjectStorageConfig objectStorageConfig, String fileName) throws FileNotFoundException, MalformedURLException {
         URL signedURL = null;
         signedURL = objectStorageClient.getPresignedURL(objectStorageConfig, fileName);
         System.out.println("Signed URL: " + signedURL);
@@ -93,6 +96,7 @@ public class DragonflyUtils implements FileLoadUtils {
                 Gson gson = new Gson();
                 JsonReader reader = new JsonReader(new FileReader(configPath));
                 dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
+                objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
             } catch (JsonParseException e) {
                 logger.error("wrong format in config :", e);
             } catch (FileNotFoundException e) {

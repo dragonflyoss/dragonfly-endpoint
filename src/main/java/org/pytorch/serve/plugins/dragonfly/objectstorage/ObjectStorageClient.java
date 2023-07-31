@@ -28,7 +28,7 @@ public interface ObjectStorageClient {
         } else if (AZURE_BLOB_STORAGE.equalsIgnoreCase(objectStorageType)) {
             return new AzureBlobStorageClient(objectStorageConfig);
         } else {
-            throw new IllegalArgumentException("Invalid storage type: " + objectStorageConfig);
+            throw new IllegalArgumentException("Invalid storage type: " + objectStorageConfig.getType());
         }
     }
 
