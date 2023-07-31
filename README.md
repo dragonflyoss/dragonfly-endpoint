@@ -10,7 +10,7 @@ The TorchServe endpoint that downloads model via Dragonfly.
 
 2. Install Dragonfly plugin jar.
 
-    `wget https://github.com/dragonflyoss/dragonfly-endpoint/add_basic_framework/Dragonfly.jar`
+    `wget https://github.com/dragonflyoss/dragonfly-endpoint/main/Dragonfly.jar`
 
 2. Initial Dragonfly plugin.
 
