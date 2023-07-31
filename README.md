@@ -101,7 +101,7 @@ Users can also set file path personally via environment variables.
 Users can use Dragonfly endpoint of Torch Serve Manage API to download and register model file.
 
 ```bash
-curl -X POST  "http://localhost:8081/dragonfly?filename=squeezenet_v1.1.mar"
+curl -X POST  "http://localhost:8081/dragonfly/model?file_name=squeezenet_v1.1.mar"
 
 {
   "status": "Model \"squeezenet_v1.1\" Version: 1.0 registered with 0 initial workers. Use scale workers API to add workers for the model."
