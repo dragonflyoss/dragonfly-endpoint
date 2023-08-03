@@ -7,7 +7,7 @@ on:
     branches: [ main, release-* ]
 
 env:
-  JAVA_VERSION: 1.8
+  JAVA_VERSION: 8
 
 jobs:
   check_size:
