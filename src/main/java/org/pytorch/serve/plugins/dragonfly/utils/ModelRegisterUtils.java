@@ -1,37 +1,22 @@
 package org.pytorch.serve.plugins.dragonfly.utils;
 
-import org.apache.commons.io.FileUtils;
 import org.pytorch.serve.archive.DownloadArchiveException;
-import org.pytorch.serve.archive.model.*;
-import org.pytorch.serve.archive.utils.ArchiveUtils;
-import org.pytorch.serve.archive.utils.InvalidArchiveURLException;
-import org.pytorch.serve.archive.utils.ZipUtils;
+import org.pytorch.serve.archive.model.Manifest;
+import org.pytorch.serve.archive.model.ModelException;
+import org.pytorch.serve.archive.model.ModelNotFoundException;
 import org.pytorch.serve.http.BadRequestException;
-import org.pytorch.serve.http.ConflictStatusException;
-import org.pytorch.serve.http.InternalServerException;
 import org.pytorch.serve.http.StatusResponse;
-import org.pytorch.serve.http.messages.RegisterModelRequest;
 import org.pytorch.serve.plugins.dragonfly.DragonflyModelRequest;
-import org.pytorch.serve.snapshot.SnapshotManager;
 import org.pytorch.serve.util.ApiUtils;
 import org.pytorch.serve.util.ConfigManager;
-import org.pytorch.serve.util.messages.EnvironmentUtils;
-import org.pytorch.serve.wlm.Model;
 import org.pytorch.serve.wlm.ModelManager;
 import org.pytorch.serve.wlm.WorkerInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-
-import static org.pytorch.serve.archive.utils.ArchiveUtils.validateURL;
 
 
 public class ModelRegisterUtils {
