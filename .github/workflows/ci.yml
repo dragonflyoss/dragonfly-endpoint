@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '8'
+          distribution: 'adopt'
 
       - name: Build with Gradle
         run: ./gradlew shadowJar
@@ -39,6 +40,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '8'
+          distribution: 'adopt'
 
       - name: Test with Gradle
         run: ./gradlew test --no-daemon --console=plain
