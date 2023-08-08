@@ -43,16 +43,13 @@ To use these object storage serves, users need creat `dragonfly_endpoint.json` f
         * `bucket_name`
 
     * GCS
-
         * `project_id`
-        * `serviceAccountPath`
+        * `service_account_path`
         * `bucket_name`
 
     * ABS
-
         * `account_name`
         * `account_key`
-        * `endpoint`
         * `container_name`
 
     * OSS
