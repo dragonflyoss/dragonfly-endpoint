@@ -18,11 +18,10 @@ public class S3 implements ObjectStorage {
         String accessKey = objectStorageConfig.getAccessKey();
         String secretKey = objectStorageConfig.getSecretKey();
         Region region = Region.of(objectStorageConfig.getRegion());
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
-                        
+
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);       
         presigner = S3Presigner.builder()
             .region(region)
-            //.endpointOverride(URI.create("http://localhost:9000"))
             .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
             .build();
     }
