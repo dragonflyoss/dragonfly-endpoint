@@ -24,6 +24,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+
+      - name: Enable Git LFS
+        run: git lfs install
           
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
@@ -44,6 +47,9 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+
+      - name: Enable Git LFS
+        run: git lfs install
 
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
