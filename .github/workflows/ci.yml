@@ -25,11 +25,11 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
           
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-
       - name: Build with Gradle
-        run: ./gradlew build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+          gradle-version: 6.8
 
   test:
     name: Test
@@ -46,4 +46,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Test with Gradle
-        run: ./gradlew test --no-daemon --console=plain
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+          gradle-version: 6.8
