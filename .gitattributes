@@ -1,0 +1,2 @@
+lib/archive-1.0.jar filter=lfs diff=lfs merge=lfs -text
+lib/server-1.0.jar filter=lfs diff=lfs merge=lfs -text
