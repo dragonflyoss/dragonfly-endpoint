@@ -3,6 +3,7 @@ package org.pytorch.serve.plugins.dragonfly.objectstorage;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.OffsetDateTime;
+
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
@@ -21,12 +22,12 @@ public class ABS implements ObjectStorage {
         String accountKey = config.getAccountKey();
 
         StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
-        
+
         client = new BlobServiceClientBuilder()
                 .endpoint(String.format("https://%s.blob.core.windows.net/", accountName))
                 .credential(credential)
                 .buildClient();
-        }
+    }
 
     @Override
     public URL getPresignedURL(ObjectStorageConfig config, String fileName) throws MalformedURLException {

@@ -1,15 +1,16 @@
 package org.pytorch.serve.plugins.dragonfly.objectstorage;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
 
 public interface ObjectStorage {
 
-    public static final String AWS_S3 = "s3";
-    public static final String GOOGLE_CLOUD_STORAGE = "gcs";
-    public static final String ALIBABA_OBJECT_STORAGE_SERVICE = "oss";
-    public static final String AZURE_BLOB_STORAGE = "abs";
+    String AWS_S3 = "s3";
+    String GOOGLE_CLOUD_STORAGE = "gcs";
+    String ALIBABA_OBJECT_STORAGE_SERVICE = "oss";
+    String AZURE_BLOB_STORAGE = "abs";
 
     static ObjectStorage createClient(ObjectStorageConfig Config) throws IllegalArgumentException, IOException {
         
@@ -29,5 +30,5 @@ public interface ObjectStorage {
         }
     }
 
-    URL getPresignedURL(ObjectStorageConfig Config, String fileName);
+    URL getPresignedURL(ObjectStorageConfig Config, String fileName) throws MalformedURLException;
 }

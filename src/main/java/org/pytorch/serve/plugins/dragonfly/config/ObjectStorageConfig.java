@@ -27,7 +27,10 @@ public class ObjectStorageConfig {
     private String accessKeyId;
     @SerializedName("access_key_secret")
     private String accessKeySecret;
-
+    @SerializedName("account_name")
+    private String accountName;
+    @SerializedName("account_key")
+    private String accountKey;
 
     
     public String getType() {
@@ -97,5 +100,20 @@ public class ObjectStorageConfig {
 
     public String getAccessKeySecret() {
         return accessKeySecret;
+    }
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getAccountKey() {
+        return accountKey;
+    }
+
+    public void setAccountKey(String accountKey) {
+        this.accountKey = accountKey;
     }
 }
