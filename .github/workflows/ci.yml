@@ -29,7 +29,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
-          gradle-version: 6.8
+          gradle-version: 8.0
 
   test:
     name: Test
@@ -49,4 +49,4 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test
-          gradle-version: 6.8
+          gradle-version: 8.0
