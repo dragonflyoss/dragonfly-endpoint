@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -67,7 +68,7 @@ public class DragonflyUtils implements FileLoadUtils {
     }
 
     // createPresignedURL get object storage's presigned URL.
-    private URL createPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) {
+    private URL createPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) throws MalformedURLException {
         URL signedURL = null;
         signedURL = objectStorageClient.getPresignedURL(objectStorageConfig, fileName);
         return signedURL;

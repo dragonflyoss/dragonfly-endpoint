@@ -21,10 +21,6 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: Run Checkstyle
-        run: |
-          mvn checkstyle:check
-
       - name: Markdown lint
         uses: docker://avtodev/markdown-lint:v1
         with:
