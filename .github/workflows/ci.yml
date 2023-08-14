@@ -27,6 +27,9 @@ jobs:
 
       - name: Enable Git LFS
         run: git lfs install
+
+      - name: Fetch LFS objects
+        run: git lfs pull
           
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
@@ -50,6 +53,9 @@ jobs:
 
       - name: Enable Git LFS
         run: git lfs install
+
+      - name: Fetch LFS objects
+        run: git lfs pull
 
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
