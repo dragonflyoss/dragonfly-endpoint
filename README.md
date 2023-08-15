@@ -24,11 +24,11 @@ The TorchServe endpoint that downloads model via Dragonfly.
 
 ## Set dragonfly_endpoint.json file
 
-The Torch Serve endpoint now support: Amazon Web Services(AWS), 
+The Torch Serve endpoint now support: Amazon Web Services(AWS),
 Google Cloud Platform(GCS), Azure Blob Storage(ABS), Alibaba Cloud(OSS).
 
-To utilize these object storage services, users need to create a 
-`dragonfly_endpoint.json` file. Inside this file, set the configuration 
+To utilize these object storage services, users need to create a
+`dragonfly_endpoint.json` file. Inside this file, set the configuration
 for both the service and Dragonfly.
 
 ### Config variables
