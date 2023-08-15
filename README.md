@@ -12,7 +12,7 @@ The TorchServe endpoint that downloads model via Dragonfly.
 
     `wget https://github.com/dragonflyoss/dragonfly-endpoint/main/Dragonfly.jar`
 
-2. Initial Dragonfly plugin.
+3. Initial Dragonfly plugin.
 
     Note: To run Dragonfly plugins on Torch Serve, Python>=3.8, Java>=11 is required.
 
@@ -24,40 +24,41 @@ The TorchServe endpoint that downloads model via Dragonfly.
 
 ## Set dragonfly_endpoint.json file
 
-The Torch Serve endpoint now support: Amazon Web Services(AWS), Google Cloud Platform(GCS), Azure Blob Storage(ABS), Alibaba Cloud(OSS).
+The Torch Serve endpoint now support: Amazon Web Services(AWS), 
+Google Cloud Platform(GCS), Azure Blob Storage(ABS), Alibaba Cloud(OSS).
 
-To use these object storage serves, users need creat `dragonfly_endpoint.json` file and set the config of serve and Dragonfly in it.
+To utilize these object storage services, users need to create a 
+`dragonfly_endpoint.json` file. Inside this file, set the configuration 
+for both the service and Dragonfly.
 
 ### Config variables
 
 1. Dragonfly
-    * `addr` - Address of Dragonfly, values save in a list.
-    * `header` - Header of  Dragonfly, values save in a map.
-
+    - `addr` - Address of Dragonfly, values save in a list.
+    - `header` - Header of  Dragonfly, values save in a map.
 
 2. Object storage
-    * AWS S3
-        * `access_key`
-        * `secret_key`
-        * `region`
-        * `bucket_name`
+    - AWS S3
+        - `access_key`
+        - `secret_key`
+        - `region`
+        - `bucket_name`
 
-    * GCS
-        * `project_id`
-        * `service_account_path`
-        * `bucket_name`
+    - GCS
+        - `project_id`
+        - `service_account_path`
+        - `bucket_name`
 
-    * ABS
-        * `account_name`
-        * `account_key`
-        * `container_name`
+    - ABS
+        - `account_name`
+        - `account_key`
+        - `container_name`
 
-    * OSS
-        * `endpoint`
-        * `access_key_id`
-        * `access_key_secret`
-        * `bucket_name`
-
+    - OSS
+        - `endpoint`
+        - `access_key_id`
+        - `access_key_secret`
+        - `bucket_name`
 
 ```bash
 {
@@ -78,7 +79,6 @@ To use these object storage serves, users need creat `dragonfly_endpoint.json` f
     "secret_key": "T6M1hChdHPMxei4VeVNOhj1zGL6N193LCdnD9GGE"
   }
 }
-
 ```
 
 ### Config path
@@ -91,7 +91,7 @@ dragonfly_endpoint.json has default file path.
 
 Users can also set file path personally via environment variables.
 
-` export DRAGONFLY_ENDPOINT_CONFIG=<path-to-dragonfly_endpoint.json>`
+`export DRAGONFLY_ENDPOINT_CONFIG=<path-to-dragonfly_endpoint.json>`
 
 ## Use Torch Serve Endpoint
 
@@ -101,6 +101,7 @@ Users can use Dragonfly endpoint of Torch Serve Manage API to download and regis
 curl -X POST  "http://localhost:8081/dragonfly/model?file_name=squeezenet_v1.1.mar"
 
 {
-  "status": "Model \"squeezenet_v1.1\" Version: 1.0 registered with 0 initial workers. Use scale workers API to add workers for the model."
+  "status": "Model \"squeezenet_v1.1\" Version: 1.0 registered with 0 initial workers. 
+  Use scale workers API to add workers for the model."
 }
 ```
