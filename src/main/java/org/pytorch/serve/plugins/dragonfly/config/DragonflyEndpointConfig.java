@@ -1,49 +1,51 @@
 package org.pytorch.serve.plugins.dragonfly.config;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.HashMap;
 import java.util.List;
 
 public class DragonflyEndpointConfig {
-    @SerializedName("addr")
-    private String addr;
-    @SerializedName("header")
-    private HashMap<String, String> header;
-    @SerializedName("filter")
-    private List<String> filter;
-    @SerializedName("object_storage")
-    ObjectStorageConfig objectStorageConfig;
+  @SerializedName("object_storage")
+  ObjectStorageConfig objectStorageConfig;
 
-    public ObjectStorageConfig getObjectStorageConfig() {
-        return objectStorageConfig;
-    }
+  @SerializedName("addr")
+  private String addr;
 
-    public void setObjectStorageConfig(ObjectStorageConfig objectStorageConfig) {
-        this.objectStorageConfig = objectStorageConfig;
-    }
+  @SerializedName("header")
+  private HashMap<String, String> header;
 
-    public String getAddr() {
-        return addr;
-    }
+  @SerializedName("filter")
+  private List<String> filter;
 
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
+  public ObjectStorageConfig getObjectStorageConfig() {
+    return objectStorageConfig;
+  }
 
-    public HashMap<String, String> getHeader() {
-        return header;
-    }
+  public void setObjectStorageConfig(ObjectStorageConfig objectStorageConfig) {
+    this.objectStorageConfig = objectStorageConfig;
+  }
 
-    public void setHeader(HashMap<String, String> header) {
-        this.header = header;
-    }
+  public String getAddr() {
+    return addr;
+  }
 
-    public List<String> getFilter() {
-        return filter;
-    }
+  public void setAddr(String addr) {
+    this.addr = addr;
+  }
 
-    public void setFilter(List<String> filter) {
-        this.filter = filter;
-    }
+  public HashMap<String, String> getHeader() {
+    return header;
+  }
+
+  public void setHeader(HashMap<String, String> header) {
+    this.header = header;
+  }
+
+  public List<String> getFilter() {
+    return filter;
+  }
+
+  public void setFilter(List<String> filter) {
+    this.filter = filter;
+  }
 }

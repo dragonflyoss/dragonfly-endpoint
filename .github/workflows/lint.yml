@@ -21,6 +21,12 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
+      - name: Apply Google Java Format
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: verification
+          gradle-version: 7.2
+
       - name: Markdown lint
         uses: docker://avtodev/markdown-lint:v1
         with:

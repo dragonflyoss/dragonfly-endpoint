@@ -29,12 +29,6 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      - name: Enable Git LFS
-        run: git lfs install
-
-      - name: Fetch LFS objects
-        run: git lfs pull
-
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
 

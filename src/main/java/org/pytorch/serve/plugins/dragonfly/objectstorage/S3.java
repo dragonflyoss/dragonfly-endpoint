@@ -12,38 +12,36 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 
 public class S3 implements ObjectStorage {
 
-    private S3Presigner presigner;
+  private S3Presigner presigner;
 
-    public S3(ObjectStorageConfig objectStorageConfig) {
-        String accessKey = objectStorageConfig.getAccessKey();
-        String secretKey = objectStorageConfig.getSecretKey();
-        Region region = Region.of(objectStorageConfig.getRegion());
+  public S3(ObjectStorageConfig objectStorageConfig) {
+    String accessKey = objectStorageConfig.getAccessKey();
+    String secretKey = objectStorageConfig.getSecretKey();
+    Region region = Region.of(objectStorageConfig.getRegion());
 
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);       
-        presigner = S3Presigner.builder()
+    AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+    presigner =
+        S3Presigner.builder()
             .region(region)
             .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
             .build();
-    }
+  }
 
-    @Override
-    public URL getPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) {
-        String bucketName = objectStorageConfig.getBucketName();
-        
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(fileName)
-                .build();
+  @Override
+  public URL getPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName) {
+    String bucketName = objectStorageConfig.getBucketName();
 
-        GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(60))
-                .getObjectRequest(getObjectRequest)
-                .build();
+    GetObjectRequest getObjectRequest =
+        GetObjectRequest.builder().bucket(bucketName).key(fileName).build();
 
-        URL theUrl = presigner
-                .presignGetObject(getObjectPresignRequest)
-                .url();
-        presigner.close();
-        return theUrl;
-    }
+    GetObjectPresignRequest getObjectPresignRequest =
+        GetObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(60))
+            .getObjectRequest(getObjectRequest)
+            .build();
+
+    URL theUrl = presigner.presignGetObject(getObjectPresignRequest).url();
+    presigner.close();
+    return theUrl;
+  }
 }

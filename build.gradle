@@ -1,11 +1,10 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.sherter.google-java-format' version '0.9'
 }
 
-repositories {
-    mavenCentral()
-}
+verifyGoogleJavaFormat.dependsOn(tasks.googleJavaFormat)
 dependencies {
     implementation "com.google.code.gson:gson:${gson_version}"
     implementation "org.pytorch:torchserve-plugins-sdk:${torchserve_sdk_version}"
@@ -13,11 +12,16 @@ dependencies {
     implementation "com.aliyun.oss:aliyun-sdk-oss:${aliyun_sdk_oss_version}"
     implementation "com.google.cloud:google-cloud-storage:${google_cloud_storage_version}"
     implementation "com.azure:azure-storage-blob:${azure_storage_blob_version}"
-    implementation files(fileTree(dir: 'lib', include: '*.jar'))
+    implementation "io.github.gaius-qi:server:${torchserve_version}"
+    implementation "io.github.gaius-qi:archive:${torchserve_version}"
 }
 
 project.ext{
     sagemaker = true
+}
+
+repositories {
+    mavenCentral()
 }
 
 jar {
@@ -87,8 +91,6 @@ configure(javaProjects()) {
 
     defaultTasks 'jar'
 
-    apply from: file("${rootProject.projectDir}/tools/gradle/formatter.gradle")
-    apply from: file("${rootProject.projectDir}/tools/gradle/check.gradle")
 
     test {
         useTestNG() {
