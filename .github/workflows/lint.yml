@@ -24,7 +24,7 @@ jobs:
       - name: Apply Google Java Format
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: verification
+          arguments: check
           gradle-version: 7.2
 
       - name: Markdown lint

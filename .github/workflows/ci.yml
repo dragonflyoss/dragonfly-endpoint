@@ -30,6 +30,7 @@ jobs:
         with:
           arguments: build
           gradle-version: 7.2
+          java-version: 11
 
   test:
     name: Test
