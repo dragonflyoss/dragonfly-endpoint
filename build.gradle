@@ -12,12 +12,13 @@ dependencies {
     implementation "com.aliyun.oss:aliyun-sdk-oss:${aliyun_sdk_oss_version}"
     implementation "com.google.cloud:google-cloud-storage:${google_cloud_storage_version}"
     implementation "com.azure:azure-storage-blob:${azure_storage_blob_version}"
-    implementation "io.github.gaius-qi:server:${torchserve_version}"
+    implementation ("io.github.gaius-qi:server:${torchserve_version}"){
+        exclude group: 'frontend', module: 'archive'
+    }
     implementation "io.github.gaius-qi:archive:${torchserve_version}"
 }
 
 shadowJar {
-    configurations = [project.configurations.shadow]
 }
 
 project.ext{
