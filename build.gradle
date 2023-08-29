@@ -16,6 +16,10 @@ dependencies {
     implementation "io.github.gaius-qi:archive:${torchserve_version}"
 }
 
+shadowJar {
+    configurations = [project.configurations.shadow]
+}
+
 project.ext{
     sagemaker = true
 }
@@ -50,6 +54,7 @@ allprojects {
 
     repositories {
         jcenter()
+        mavenCentral()
     }
 
     idea {

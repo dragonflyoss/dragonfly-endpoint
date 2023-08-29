@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -26,6 +27,8 @@ import org.slf4j.LoggerFactory;
 public class DragonflyUtils implements FileLoadUtils {
 
   public static final String dragonflyFilterName = "X-Dragonfly-Filter";
+
+  public static final int dragonflyProxyPort = 65001;
 
   public static final String configEnvName = "DRAGONFLY_ENDPOINT_CONFIG";
 
@@ -76,7 +79,16 @@ public class DragonflyUtils implements FileLoadUtils {
   private void createDragonflyDownloadHttpRequest(URL url, File modelLocation) throws IOException {
 
     // set http proxy
-    HttpHost proxy = new HttpHost(dragonflyEndpointConfig.getAddr(), 8080);
+    String hostname = "";
+    int port = dragonflyProxyPort;
+    try {
+      URI uri = new URI(dragonflyEndpointConfig.getAddr());
+      hostname = uri.getHost();
+      if (uri.getPort() != -1) port = uri.getPort();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    HttpHost proxy = new HttpHost(hostname, port);
     RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
 
     try (CloseableHttpClient httpClient =
