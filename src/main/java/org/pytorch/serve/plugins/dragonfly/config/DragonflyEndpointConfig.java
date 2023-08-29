@@ -5,15 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DragonflyEndpointConfig {
+  // Config of object storage.
   @SerializedName("object_storage")
   ObjectStorageConfig objectStorageConfig;
 
+  // Dragonfly address.
   @SerializedName("addr")
   private String addr;
-
+  
+  // Dragonfly header.
   @SerializedName("header")
   private HashMap<String, String> header;
 
+  // Dragonfly filter.
   @SerializedName("filter")
   private List<String> filter;
 

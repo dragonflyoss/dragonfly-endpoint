@@ -7,38 +7,41 @@ import org.pytorch.serve.servingsdk.http.Request;
 import org.pytorch.serve.util.ConfigManager;
 
 public class DragonflyModelRequest {
+  // Model name.
   @SerializedName("model_name")
   private String modelName;
 
+  // Model file name.
   @SerializedName("file_name")
   private String fileName;
 
+  // Runtime for the model custom service code.
   @SerializedName("runtime")
   private String runtime;
 
+  // Inference handler entry-point.
   @SerializedName("handler")
   private String handler;
 
+  // Inference batch size.
   @SerializedName("batch_size")
   private int batchSize;
 
+  // Maximum delay for batch aggregation.
   @SerializedName("max_batch_delay")
   private int maxBatchDelay;
 
+  // Number of initial workers to create.
   @SerializedName("initial_workers")
   private int initialWorkers;
 
+  // Whether the creation of worker is synchronous.
   @SerializedName("synchronous")
   private boolean synchronous;
 
+  // Maximum wait time for rebooted.
   @SerializedName("response_timeout")
   private int responseTimeout;
-
-  @SerializedName("url")
-  private String modelUrl;
-
-  @SerializedName("s3_sse_kms")
-  private boolean s3SseKms;
 
   public DragonflyModelRequest(Request req) {
     Map<String, List<String>> parameterMap = req.getParameterMap();
@@ -55,8 +58,6 @@ public class DragonflyModelRequest {
             ConfigManager.getInstance().getConfiguredDefaultWorkersPerModel());
     synchronous = Boolean.parseBoolean(getDecoder(parameterMap, "synchronous", "true"));
     responseTimeout = getDecoder(parameterMap, "response_timeout", -1);
-    modelUrl = getDecoder(parameterMap, "url", null);
-    s3SseKms = Boolean.parseBoolean(getDecoder(parameterMap, "s3_sse_kms", "false"));
   }
 
   private String getDecoder(
@@ -114,13 +115,5 @@ public class DragonflyModelRequest {
 
   public Integer getResponseTimeout() {
     return responseTimeout;
-  }
-
-  public String getModelUrl() {
-    return modelUrl;
-  }
-
-  public Boolean getS3SseKms() {
-    return s3SseKms;
   }
 }

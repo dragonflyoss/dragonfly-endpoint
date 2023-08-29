@@ -50,6 +50,9 @@ public class DragonflyUtils implements FileLoadUtils {
 
   private ObjectStorage objectStorageClient;
 
+  /**
+   * Private constructor to initialize configuration and object storage client.
+   */
   private DragonflyUtils() {
 
     initConfig();
@@ -60,12 +63,14 @@ public class DragonflyUtils implements FileLoadUtils {
     }
   }
 
+  /**
+   * @return Singleton instance of DragonflyUtils.
+   */
   public static DragonflyUtils getInstance() {
     return dragonflyUtils;
   }
 
-  // copyURLToFile validate download url and finsh download via
-  // createDragonflyDownloadHttpRequest.
+  // Downloads a file using a Dragonfly HTTP request.
   public void copyURLToFile(String fileName, File modelLocation) throws IOException {
     URL url = createPresignedURL(objectStorageConfig, fileName);
     if (url == null) {
@@ -75,10 +80,10 @@ public class DragonflyUtils implements FileLoadUtils {
     createDragonflyDownloadHttpRequest(url, modelLocation);
   }
 
-  // createDragonflyDownloadHttpRequest download model file to modelLocation through Dragonfly.
+  // Creates a Dragonfly HTTP request and downloads the content to the specified location.
   private void createDragonflyDownloadHttpRequest(URL url, File modelLocation) throws IOException {
 
-    // set http proxy
+    // Set http proxy.
     String hostname = "";
     int port = dragonflyProxyPort;
     try {
@@ -128,7 +133,7 @@ public class DragonflyUtils implements FileLoadUtils {
     }
   }
 
-  // createPresignedURL get object storage's presigned URL.
+  // Creates a presigned URL for object storage.
   private URL createPresignedURL(ObjectStorageConfig objectStorageConfig, String fileName)
       throws MalformedURLException {
     URL signedURL = null;
@@ -136,7 +141,7 @@ public class DragonflyUtils implements FileLoadUtils {
     return signedURL;
   }
 
-  // initConfig initial Dragonfly and object storage serve's config.
+  // Initializes configuration for Dragonfly and object storage.
   private void initConfig() {
     dragonflyEndpointConfig = new DragonflyEndpointConfig();
     dragonflyEndpointConfig.setObjectStorageConfig(new ObjectStorageConfig());

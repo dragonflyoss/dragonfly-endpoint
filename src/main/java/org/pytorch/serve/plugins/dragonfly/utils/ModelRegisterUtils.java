@@ -54,7 +54,7 @@ public class ModelRegisterUtils {
     int maxBatchDelay = dragonflyModelRequest.getMaxBatchDelay();
     int initialWorkers = dragonflyModelRequest.getInitialWorkers();
     int responseTimeout = dragonflyModelRequest.getResponseTimeout();
-    boolean s3SseKms = dragonflyModelRequest.getS3SseKms();
+
     if (responseTimeout == -1) {
       responseTimeout = ConfigManager.getInstance().getDefaultResponseTimeout();
     }
@@ -80,6 +80,6 @@ public class ModelRegisterUtils {
         initialWorkers,
         dragonflyModelRequest.getSynchronous(),
         false,
-        s3SseKms);
+        false);
   }
 }

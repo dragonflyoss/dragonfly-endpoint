@@ -40,8 +40,8 @@ public class S3 implements ObjectStorage {
             .getObjectRequest(getObjectRequest)
             .build();
 
-    URL theUrl = presigner.presignGetObject(getObjectPresignRequest).url();
+    URL preSignUrl = presigner.presignGetObject(getObjectPresignRequest).url();
     presigner.close();
-    return theUrl;
+    return preSignUrl;
   }
 }
