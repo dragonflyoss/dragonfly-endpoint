@@ -26,8 +26,8 @@ public class OSS implements ObjectStorage {
     Date expiration = new Date(new Date().getTime() + 3600 * 1000);
     GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, fileName);
     request.setExpiration(expiration);
-    URL signedUrl = ossClient.generatePresignedUrl(request);
+    URL preSignUrl = ossClient.generatePresignedUrl(request);
 
-    return signedUrl;
+    return preSignUrl;
   }
 }

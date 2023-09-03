@@ -47,7 +47,7 @@ public class ABS implements ObjectStorage {
             .setStartTime(OffsetDateTime.now().minusMinutes(5));
     String sasToken = containerClient.generateSas(sasSignatureValues);
 
-    URL theUrl = new URL(blobClient.getBlobUrl() + "?" + sasToken);
-    return theUrl;
+    URL preSignUrl = new URL(blobClient.getBlobUrl() + "?" + sasToken);
+    return preSignUrl;
   }
 }

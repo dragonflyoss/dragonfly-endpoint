@@ -36,7 +36,7 @@ public class GCS implements ObjectStorage {
     BlobId blobId = BlobId.of(bucketName, fileName);
     BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
-    URL theUrl = storage.signUrl(blobInfo, 60, TimeUnit.MINUTES);
-    return theUrl;
+    URL preSignUrl = storage.signUrl(blobInfo, 60, TimeUnit.MINUTES);
+    return preSignUrl;
   }
 }

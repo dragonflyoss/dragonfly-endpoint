@@ -15,7 +15,7 @@ public interface ObjectStorage {
   static ObjectStorage createClient(ObjectStorageConfig Config)
       throws IllegalArgumentException, IOException {
 
-    // type is type of object storage serve.
+    // Type of object storage serve.
     String type = Config.getType();
 
     if (AWS_S3.equalsIgnoreCase(type)) {

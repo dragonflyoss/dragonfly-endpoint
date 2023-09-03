@@ -1,107 +1,30 @@
 # dragonfly-endpoint
 
+[![GitHub release](https://img.shields.io/github/v/release/dragonflyoss/dragonfly-endpoint.svg)](https://github.com/dragonflyoss/dragonfly-endpoint/releases)
+[![CI](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/dragonflyoss/client/branch/main/graph/badge.svg)](https://codecov.io/gh/dragonflyoss/dfdameon)
+[![Open Source Helpers](https://www.codetriage.com/dragonflyoss/dragonfly-endpoint/badges/users.svg)](https://www.codetriage.com/dragonflyoss/dragonfly-endpoint)
+[![Discussions](https://img.shields.io/badge/discussions-on%20github-blue?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/discussions)
+[![LICENSE](https://img.shields.io/github/license/dragonflyoss/Dragonfly2.svg?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/blob/main/LICENSE)
+
 The TorchServe endpoint that downloads model via Dragonfly.
 
-## Getting Started
+## Documentation
 
-1. Install Troch Serve.
+You can find the full documentation on the [d7y.io](https://d7y.io).
 
-    Refer to the documentation [here](https://github.com/pytorch/serve).
+## Community
 
-2. Install Dragonfly plugin jar.
+Join the conversation and help the community.
 
-    `wget https://github.com/dragonflyoss/dragonfly-endpoint/main/Dragonfly.jar`
+- **Slack Channel**: [#dragonfly](https://cloud-native.slack.com/messages/dragonfly/) on [CNCF Slack](https://slack.cncf.io/)
+- **Discussion Group**: <dragonfly-discuss@googlegroups.com>
+- **Developer Group**: <dragonfly-developers@googlegroups.com>
+- **Github Discussions**: [Dragonfly Discussion Forum](https://github.com/dragonflyoss/Dragonfly2/discussions)
+- **Twitter**: [@dragonfly_oss](https://twitter.com/dragonfly_oss)
+- **DingTalk**: [22880028764](https://qr.dingtalk.com/action/joingroup?code=v1,k1,pkV9IbsSyDusFQdByPSK3HfCG61ZCLeb8b/lpQ3uUqI=&_dt_no_comment=1&origin=11)
 
-3. Initial Dragonfly plugin.
+## Contributing
 
-    Note: To run Dragonfly plugins on Torch Serve, Python>=3.8, Java>=11 is required.
-
-    There are following two ways to include Dragonfly plugin jars to Torch Serve.
-
-    - Using config. property: Add following line to your Torch Serve config. properties file. `plugins_path=<path-containing-plugin-jars">`.
-
-    - Using command line option:  `torchserve --start --model-store <your-model-store-path> --plugins-path=<path-to-plugin-jars>`.
-
-## Set dragonfly_endpoint.json file
-
-The Torch Serve endpoint now support: Amazon Web Services(AWS),
-Google Cloud Platform(GCS), Azure Blob Storage(ABS), Alibaba Cloud(OSS).
-
-To utilize these object storage services, users need to create a
-`dragonfly_endpoint.json` file. Inside this file, set the configuration
-for both the service and Dragonfly.
-
-### Config variables
-
-1. Dragonfly
-    - `addr` - Address of Dragonfly, values save in a list.
-    - `header` - Header of  Dragonfly, values save in a map.
-
-2. Object storage
-    - AWS S3
-        - `access_key`
-        - `secret_key`
-        - `region`
-        - `bucket_name`
-
-    - GCS
-        - `project_id`
-        - `service_account_path`
-        - `bucket_name`
-
-    - ABS
-        - `account_name`
-        - `account_key`
-        - `container_name`
-
-    - OSS
-        - `endpoint`
-        - `access_key_id`
-        - `access_key_secret`
-        - `bucket_name`
-
-```bash
-{
-  "addr": "http://127.0.0.1:65001",
-  "header": {
-    "Accept": "*",
-    "Host": "abc"
-  },
-  "filter": [
-    "key",
-    "sign"
-  ],
-  "object_storage": {
-    "type": "s3",
-    "bucket_name": "pytorch-model",
-    "region": "us-east-1",
-    "access_key": "lwIImYkqPuLkTIRe2Jkl",
-    "secret_key": "T6M1hChdHPMxei4VeVNOhj1zGL6N193LCdnD9GGE"
-  }
-}
-```
-
-### Config path
-
-dragonfly_endpoint.json has default file path.
-
-- Windows: `C:\\ProgramData\\dragonfly_endpoint\\dragonfly_endpoint.json`
-- Linux:`/etc/dragonfly_endpoint/dragonfly_endpoint.json`
-- MacOS:`~/.dragonfly_endpoint/dragonfly_endpoint.json`
-
-Users can also set file path personally via environment variables.
-
-`export DRAGONFLY_ENDPOINT_CONFIG=<path-to-dragonfly_endpoint.json>`
-
-## Use Torch Serve Endpoint
-
-Users can use Dragonfly endpoint of Torch Serve Manage API to download and register model file.
-
-```bash
-curl -X POST  "http://localhost:8081/dragonfly/model?file_name=squeezenet_v1.1.mar"
-
-{
-  "status": "Model \"squeezenet_v1.1\" Version: 1.0 registered with 0 initial workers. 
-  Use scale workers API to add workers for the model."
-}
-```
+You should check out our
+[CONTRIBUTING](./CONTRIBUTING.md) and develop the project together.

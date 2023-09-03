@@ -16,11 +16,22 @@ import org.pytorch.serve.servingsdk.http.Request;
 import org.pytorch.serve.servingsdk.http.Response;
 import org.pytorch.serve.wlm.WorkerInitializationException;
 
+/**
+ * The Dragonfly endpoint for the Model Server.
+ *      
+ * @param urlPattern  The endpoint name.
+ * @param endpointType  The type of API, Management API port is 8081.
+ * @param description  The function of endpoint.
+ * @see DragonflyModelRequest
+ * @see ModelRegisterUtils
+ * @throws RuntimeException If there's an error during download, model registration, or any other operation.
+ */
 @Endpoint(
     urlPattern = "dragonfly",
     endpointType = EndpointTypes.MANAGEMENT,
     description = "download through dragonfly.")
 public class Dragonfly extends ModelServerEndpoint {
+
   @Override
   public void doPost(Request req, Response rsp, Context ctx) throws IOException {
     try {
