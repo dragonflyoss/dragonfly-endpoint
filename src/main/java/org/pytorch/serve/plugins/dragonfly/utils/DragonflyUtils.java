@@ -77,7 +77,6 @@ public class DragonflyUtils implements FileLoadUtils {
 
   // createDragonflyDownloadHttpRequest download model file to modelLocation through Dragonfly.
   private void createDragonflyDownloadHttpRequest(URL url, File modelLocation) throws IOException {
-
     // set http proxy
     String hostname = "";
     int port = dragonflyProxyPort;
@@ -93,7 +92,6 @@ public class DragonflyUtils implements FileLoadUtils {
 
     try (CloseableHttpClient httpClient =
         HttpClients.custom().setDefaultRequestConfig(config).build()) {
-
       HttpGet request = new HttpGet(url.toURI());
       Map<String, String> header = dragonflyEndpointConfig.getHeader();
       if (header != null) {
@@ -121,6 +119,8 @@ public class DragonflyUtils implements FileLoadUtils {
           } else {
             throw new RuntimeException("No entity content in the response.");
           }
+        }else{
+          throw new RuntimeException("Download by dragonfly failed, response: "+response);
         }
       }
     } catch (URISyntaxException e) {
@@ -156,6 +156,7 @@ public class DragonflyUtils implements FileLoadUtils {
       Gson gson = new Gson();
       JsonReader reader = new JsonReader(new FileReader(configPath));
       dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
+      objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
     } catch (JsonParseException e) {
       logger.error("wrong format in config :", e);
     } catch (FileNotFoundException e) {

@@ -1,5 +1,6 @@
 package org.pytorch.serve.plugins.dragonfly;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 import org.pytorch.serve.archive.DownloadArchiveException;
@@ -21,29 +22,20 @@ import org.pytorch.serve.wlm.WorkerInitializationException;
     description = "download through dragonfly.")
 public class Dragonfly extends ModelServerEndpoint {
   @Override
-  public void doPost(Request req, Response rsp, Context ctx) {
+  public void doPost(Request req, Response rsp, Context ctx) throws IOException {
     try {
       DragonflyModelRequest dragonflyModelRequest = new DragonflyModelRequest(req);
       ModelRegisterUtils registerUtil = new ModelRegisterUtils(DragonflyUtils.getInstance());
       StatusResponse statusResponse = registerUtil.downLoadAndRegisterModel(dragonflyModelRequest);
-      if (statusResponse != null) {
         rsp.setStatus(statusResponse.getHttpResponseCode());
-        byte[] success =
-            String.format("{\n\t\"Status\": \"%s\"\n}\n", statusResponse.getStatus())
+        byte[] success = String.format("{\n\t\"Status\": \"%s\"\n}\n", statusResponse.getStatus())
                 .getBytes(StandardCharsets.UTF_8);
         rsp.getOutputStream().write(success);
-      } else {
-        rsp.setStatus(500);
-      }
-
-    } catch (DownloadArchiveException
-        | ModelException
-        | WorkerInitializationException
-        | InterruptedException
-        | ExecutionException e) {
-      throw new RuntimeException(e);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (DownloadArchiveException | ModelException | WorkerInitializationException | InterruptedException |
+             ExecutionException | IOException  | RuntimeException e) {
+      byte[] failed = String.format("{\n\t\"Status\": \"%s\"\n}\n", e.getMessage())
+              .getBytes(StandardCharsets.UTF_8);
+      rsp.getOutputStream().write(failed);
     }
   }
 }
