@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main, release-*]
+    paths-ignore: ['**.md', '**.png', '**.jpg', '**.svg', '**/docs/**']
+  pull_request:
+    branches: [ main, release-* ]
+    paths-ignore: ['**.md', '**.png', '**.jpg', '**.svg', '**/docs/**']
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+          gradle-version: 7.2
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Test with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
+          gradle-version: 7.2
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.txt
+          flags: unittests
