@@ -60,7 +60,7 @@ network locations, private business data and so on.
 
 ## Code and doc contribution
 
-Every action to make project dragonfly-endpoint  better is encouraged.
+Every action to make project dragonfly-endpoint better is encouraged.
 On GitHub, every improvement for dragonfly-endpoint could be
 via a PR (short for pull request).
 
