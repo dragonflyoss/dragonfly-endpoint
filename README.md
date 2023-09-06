@@ -1,10 +1,6 @@
 # dragonfly-endpoint
 
-[![GitHub release](https://img.shields.io/github/v/release/dragonflyoss/dragonfly-endpoint.svg)](https://github.com/dragonflyoss/dragonfly-endpoint/releases)
 [![CI](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/dragonflyoss/client/branch/main/graph/badge.svg)](https://codecov.io/gh/dragonflyoss/dfdameon)
-[![Open Source Helpers](https://www.codetriage.com/dragonflyoss/dragonfly-endpoint/badges/users.svg)](https://www.codetriage.com/dragonflyoss/dragonfly-endpoint)
-[![Discussions](https://img.shields.io/badge/discussions-on%20github-blue?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/discussions)
 [![LICENSE](https://img.shields.io/github/license/dragonflyoss/Dragonfly2.svg?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/blob/main/LICENSE)
 
 The TorchServe endpoint that downloads model via Dragonfly.
