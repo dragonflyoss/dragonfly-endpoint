@@ -18,10 +18,10 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '20'
           distribution: 'adopt'
 
-      - name: Apply Google Java Format
+      - name: Run checks
         uses: gradle/gradle-build-action@v2
         with:
           arguments: check

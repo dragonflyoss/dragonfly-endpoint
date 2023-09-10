@@ -22,7 +22,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '20'
           distribution: 'adopt'
           
       - name: Build with Gradle
@@ -42,7 +42,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '8'
+          java-version: '20'
           distribution: 'adopt'
 
       - name: Test with Gradle
