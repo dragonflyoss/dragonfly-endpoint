@@ -66,9 +66,7 @@ public class DragonflyUtils implements FileLoadUtils {
 
   private ObjectStorage objectStorageClient;
 
-  /**
-   * Private constructor to initialize configuration and object storage client.
-   */
+  /** Private constructor to initialize configuration and object storage client. */
   private DragonflyUtils() {
 
     initConfig();
@@ -79,9 +77,7 @@ public class DragonflyUtils implements FileLoadUtils {
     }
   }
 
-  /**
-   * @return Singleton instance of DragonflyUtils.
-   */
+  /** @return Singleton instance of DragonflyUtils. */
   public static DragonflyUtils getInstance() {
     return dragonflyUtils;
   }
@@ -142,8 +138,8 @@ public class DragonflyUtils implements FileLoadUtils {
           } else {
             throw new RuntimeException("No entity content in the response.");
           }
-        }else{
-          throw new RuntimeException("Download by dragonfly failed, response: "+response);
+        } else {
+          throw new RuntimeException("Download by dragonfly failed, response: " + response);
         }
       }
     } catch (URISyntaxException e) {

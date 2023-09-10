@@ -28,7 +28,7 @@ public class DragonflyEndpointConfig {
   // Dragonfly address.
   @SerializedName("addr")
   private String addr;
-  
+
   // Dragonfly header.
   @SerializedName("header")
   private HashMap<String, String> header;

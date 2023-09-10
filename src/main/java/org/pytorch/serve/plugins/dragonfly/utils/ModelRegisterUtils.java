@@ -50,6 +50,7 @@ public class ModelRegisterUtils {
 
   /**
    * download model file by dragonfly and register model by torch serve apiUtils
+   *
    * @param dragonflyModelRequest
    * @return StatusResponse
    * @throws DownloadArchiveException
@@ -72,10 +73,10 @@ public class ModelRegisterUtils {
       throw new ModelNotFoundException("Model store has not been configured.");
     }
     File modelLocation = new File(modelStore, fileName);
-    //download file by dragonfly
+    // download file by dragonfly
     fileLoadUtil.copyURLToFile(fileName, modelLocation);
 
-    //register model
+    // register model
     String modelName = dragonflyModelRequest.getModelName();
     String runtime = dragonflyModelRequest.getRuntime();
     String handler = dragonflyModelRequest.getHandler();
