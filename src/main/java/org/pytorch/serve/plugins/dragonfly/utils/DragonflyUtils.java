@@ -88,7 +88,7 @@ public class DragonflyUtils implements FileLoadUtils {
     if (url == null) {
       throw new IOException("empty url");
     }
-
+    logger.info("signed url: "+url);
     createDragonflyDownloadHttpRequest(url, modelLocation);
   }
 
@@ -120,8 +120,10 @@ public class DragonflyUtils implements FileLoadUtils {
       }
 
       List<String> filters = dragonflyEndpointConfig.getFilter();
-      String filtersString = String.join("&", filters);
-      request.setHeader(dragonflyFilterName, filtersString);
+      if(filters != null){
+        String filtersString = String.join("&", filters);
+        request.setHeader(dragonflyFilterName, filtersString);
+      }
 
       try (CloseableHttpResponse response = httpClient.execute(request)) {
         if (response.getStatusLine().getStatusCode() == 200) {
