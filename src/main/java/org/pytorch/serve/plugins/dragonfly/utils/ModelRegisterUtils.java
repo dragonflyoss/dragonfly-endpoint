@@ -74,8 +74,10 @@ public class ModelRegisterUtils {
     }
     File modelLocation = new File(modelStore, fileName);
     // download file by dragonfly
+    long startTime = System.currentTimeMillis();
     fileLoadUtil.copyURLToFile(fileName, modelLocation);
-
+    long endTime = System.currentTimeMillis();
+    logger.info(String.format("copyURLToFile execution time: %d ms",endTime-startTime ));
     // register model
     String modelName = dragonflyModelRequest.getModelName();
     String runtime = dragonflyModelRequest.getRuntime();
