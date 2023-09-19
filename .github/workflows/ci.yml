@@ -22,14 +22,14 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
           
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
-          gradle-version: 7.3
+          gradle-version: 7.2
 
   test:
     name: Test
@@ -42,14 +42,14 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
 
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
           arguments: test
-          gradle-version: 7.3
+          gradle-version: 7.2
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3

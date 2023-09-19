@@ -18,14 +18,14 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
 
       - name: Run checks
         uses: gradle/gradle-build-action@v2
         with:
           arguments: check
-          gradle-version: 7.3
+          gradle-version: 7.2
 
       - name: Markdown lint
         uses: docker://avtodev/markdown-lint:v1
