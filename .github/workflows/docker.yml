@@ -58,6 +58,6 @@ jobs:
             GITVERSION=git-${{ steps.vars.outputs.git_revision }}
             VERSION=${{ steps.get_version.outputs.VERSION }}
           tags: |
-            ${{ env.IMAGE_REPOSITORY_NAME }}/torchserve-with-dragonfly:${{ steps.get_version.outputs.VERSION }}
+            lcwdocker/torchserve-with-dragonfly:${{ steps.get_version.outputs.VERSION }}
           push:
             true
