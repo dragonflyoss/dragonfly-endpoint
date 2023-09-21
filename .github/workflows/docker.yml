@@ -2,9 +2,9 @@ name: Docker
 
 on:
   push:
-    branches: [main, Feat*]
-    tags:
-      - v*
+    branches: [ main, release-* ]
+  pull_request:
+    branches: [ main, release-* ]
 
 jobs:
   push_image_to_registry:
