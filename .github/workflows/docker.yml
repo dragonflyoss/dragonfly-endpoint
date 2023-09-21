@@ -42,6 +42,7 @@ jobs:
         run: |
           echo "DOCKER_USERNAME secret: ${{ secrets.DOCKER_USERNAME }}"
           echo "DOCKER_USERNAME value: $DOCKER_USERNAME"
+          echo "test secret: ${{ secrets.MY_TEST }}"
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
