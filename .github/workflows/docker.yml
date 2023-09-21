@@ -40,7 +40,10 @@ jobs:
 
       - name: Print DOCKER_USERNAME
         run: |
-          echo "DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}"
+          echo "DOCKER_USERNAME secret: ${{ secrets.DOCKER_USERNAME }}"
+          echo "DOCKER_USERNAME value: $DOCKER_USERNAME"
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
 
       - name: Login Docker Hub
