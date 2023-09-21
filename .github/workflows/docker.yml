@@ -58,6 +58,6 @@ jobs:
             GITVERSION=git-${{ steps.vars.outputs.git_revision }}
             VERSION=${{ steps.get_version.outputs.VERSION }}
           tags: |
-            dragonflyoss/torchserve-with-dragonfly:${{ steps.get_version.outputs.VERSION }}
+            dragonflyoss/torchserve-with-dragonfly:test
           push:
             true
