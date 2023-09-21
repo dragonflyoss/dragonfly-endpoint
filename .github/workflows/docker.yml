@@ -50,7 +50,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          file: build/images/torchserve-with-dragonfly/Dockerfile
+          file: images/Dockerfile
           labels: |-
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
