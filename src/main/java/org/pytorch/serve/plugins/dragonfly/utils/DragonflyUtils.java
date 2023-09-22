@@ -48,9 +48,9 @@ public class DragonflyUtils implements FileLoadUtils {
 
   public static final String configEnvName = "DRAGONFLY_ENDPOINT_CONFIG";
 
-  public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint/";
+  public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint";
 
-  public static final String darwinDefaultConfigPath = "/.dragonfly_endpoint/";
+  public static final String darwinDefaultConfigPath = "/.dragonfly_endpoint";
 
   private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
 
@@ -163,9 +163,9 @@ public class DragonflyUtils implements FileLoadUtils {
     if (configPath == null) {
       String osType = System.getProperty("os.name").toUpperCase();
       if (osType.contains("LINUX")) {
-        configPath = linuxDefaultConfigPath + configFileName;
+        configPath = linuxDefaultConfigPath ;
       } else if (osType.contains("MAC")) {
-        configPath = System.getProperty("user.home") + darwinDefaultConfigPath + configFileName;
+        configPath = System.getProperty("user.home") + darwinDefaultConfigPath ;
       } else {
         logger.error("do not support os type :" + osType);
       }
@@ -173,7 +173,7 @@ public class DragonflyUtils implements FileLoadUtils {
 
     try {
       Gson gson = new Gson();
-      JsonReader reader = new JsonReader(new FileReader(configPath));
+      JsonReader reader = new JsonReader(new FileReader(configPath + "/" + configFileName));
       dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
       objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
     } catch (JsonParseException e) {
