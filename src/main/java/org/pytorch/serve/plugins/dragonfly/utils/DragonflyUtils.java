@@ -48,9 +48,9 @@ public class DragonflyUtils implements FileLoadUtils {
 
   public static final String configEnvName = "DRAGONFLY_ENDPOINT_CONFIG";
 
-  public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint";
+  public static final String linuxDefaultConfigPath = "/etc/dragonfly-endpoint";
 
-  public static final String darwinDefaultConfigPath = "/.dragonfly_endpoint";
+  public static final String darwinDefaultConfigPath = "/.dragonfly-endpoint";
 
   private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
 
