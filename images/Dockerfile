@@ -4,6 +4,8 @@ WORKDIR /app
 
 RUN git clone https://github.com/dragonflyoss/dragonfly-endpoint.git
 
+RUN git checkout -b dev origin/feat：udpate_workflow 
+
 WORKDIR /app/dragonfly-endpoint
 
 RUN gradle shadowJar
