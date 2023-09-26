@@ -2,7 +2,7 @@ FROM gradle:latest as builder
 
 WORKDIR /app
 
-RUN git clone -b feat：udpate_workflow https://github.com/dragonflyoss/dragonfly-endpoint.git
+RUN git clone https://github.com/dragonflyoss/dragonfly-endpoint.git
 
 WORKDIR /app/dragonfly-endpoint
 
