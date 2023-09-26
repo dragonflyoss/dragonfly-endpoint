@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN git clone https://github.com/dragonflyoss/dragonfly-endpoint.git
 
-RUN git checkout feat：udpate_workflow 
+RUN git checkout origin/feat：udpate_workflow
 
 WORKDIR /app/dragonfly-endpoint
 
