@@ -2,9 +2,10 @@ name: Docker
 
 on:
   push:
-    branches: [ main, release-* ]
-  pull_request:
-    branches: [ main, release-* ]
+    branches:
+      - main
+    tags:
+      - v*
 
 jobs:
   push_image_to_registry:
@@ -58,6 +59,6 @@ jobs:
             GITVERSION=git-${{ steps.vars.outputs.git_revision }}
             VERSION=${{ steps.get_version.outputs.VERSION }}
           tags: |
-            lcwdocker/torchserve-with-dragonfly:test
+            dragonflyoss/torchserve-dragonfly:${{ steps.get_version.outputs.VERSION }}
           push:
             true

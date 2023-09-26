@@ -172,7 +172,6 @@ public class DragonflyUtils implements FileLoadUtils {
         logger.error("do not support os type :" + osType);
       }
     }
-
     try {
       Gson gson = new Gson();
       JsonReader reader = new JsonReader(new FileReader(configPath + "/" + configFileName));
