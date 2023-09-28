@@ -2,9 +2,9 @@ FROM gradle:latest as builder
 
 WORKDIR /app
 
-RUN git clone https://github.com/dragonflyoss/dragonfly-endpoint.git
-
 WORKDIR /app/dragonfly-endpoint
+
+COPY . /app/dragonfly-endpoint
 
 RUN gradle shadowJar
 
