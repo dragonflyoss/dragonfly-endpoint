@@ -34,10 +34,6 @@ import org.pytorch.serve.wlm.WorkerInitializationException;
 
 /**
  * The Dragonfly endpoint for the Model Server.
- *
- * <p>param urlPattern The endpoint name. param endpointType The type of API, Management API port is
- * 8081. param description The function of endpoint.
- *
  * @see DragonflyModelRequest
  * @see ModelRegisterUtils
  * @throws RuntimeException If there's an error during download, model registration, or any other
