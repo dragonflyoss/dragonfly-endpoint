@@ -50,6 +50,7 @@ public class ModelRegisterUtils {
 
   /**
    * download model file by dragonfly and register model by torch serve apiUtils
+   *
    * @param dragonflyModelRequest
    * @return StatusResponse
    * @throws DownloadArchiveException

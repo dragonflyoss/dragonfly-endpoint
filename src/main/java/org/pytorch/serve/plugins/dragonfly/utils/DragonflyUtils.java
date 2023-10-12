@@ -48,9 +48,9 @@ public class DragonflyUtils implements FileLoadUtils {
 
   public static final String configEnvName = "DRAGONFLY_ENDPOINT_CONFIG";
 
-  public static final String linuxDefaultConfigPath = "/etc/dragonfly_endpoint/";
+  public static final String linuxDefaultConfigPath = "/etc/dragonfly-endpoint";
 
-  public static final String darwinDefaultConfigPath = "/.dragonfly_endpoint/";
+  public static final String darwinDefaultConfigPath = "/.dragonfly-endpoint";
 
   private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
 
@@ -66,9 +66,7 @@ public class DragonflyUtils implements FileLoadUtils {
 
   private ObjectStorage objectStorageClient;
 
-  /**
-   * Private constructor to initialize configuration and object storage client.
-   */
+  /** Private constructor to initialize configuration and object storage client. */
   private DragonflyUtils() {
 
     initConfig();
@@ -79,9 +77,7 @@ public class DragonflyUtils implements FileLoadUtils {
     }
   }
 
-  /**
-   * @return Singleton instance of DragonflyUtils.
-   */
+  /** @return Singleton instance of DragonflyUtils. */
   public static DragonflyUtils getInstance() {
     return dragonflyUtils;
   }
@@ -124,8 +120,10 @@ public class DragonflyUtils implements FileLoadUtils {
       }
 
       List<String> filters = dragonflyEndpointConfig.getFilter();
-      String filtersString = String.join("&", filters);
-      request.setHeader(dragonflyFilterName, filtersString);
+      if(filters != null){
+        String filtersString = String.join("&", filters);
+        request.setHeader(dragonflyFilterName, filtersString);
+      }
 
       try (CloseableHttpResponse response = httpClient.execute(request)) {
         if (response.getStatusLine().getStatusCode() == 200) {
@@ -142,8 +140,8 @@ public class DragonflyUtils implements FileLoadUtils {
           } else {
             throw new RuntimeException("No entity content in the response.");
           }
-        }else{
-          throw new RuntimeException("Download by dragonfly failed, response: "+response);
+        } else {
+          throw new RuntimeException("Download by dragonfly failed, response: " + response);
         }
       }
     } catch (URISyntaxException e) {
@@ -167,17 +165,16 @@ public class DragonflyUtils implements FileLoadUtils {
     if (configPath == null) {
       String osType = System.getProperty("os.name").toUpperCase();
       if (osType.contains("LINUX")) {
-        configPath = linuxDefaultConfigPath + configFileName;
+        configPath = linuxDefaultConfigPath ;
       } else if (osType.contains("MAC")) {
-        configPath = System.getProperty("user.home") + darwinDefaultConfigPath + configFileName;
+        configPath = System.getProperty("user.home") + darwinDefaultConfigPath ;
       } else {
         logger.error("do not support os type :" + osType);
       }
     }
-
     try {
       Gson gson = new Gson();
-      JsonReader reader = new JsonReader(new FileReader(configPath));
+      JsonReader reader = new JsonReader(new FileReader(configPath + "/" + configFileName));
       dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
       objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
     } catch (JsonParseException e) {

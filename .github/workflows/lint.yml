@@ -21,7 +21,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Apply Google Java Format
+      - name: Run checks
         uses: gradle/gradle-build-action@v2
         with:
           arguments: check

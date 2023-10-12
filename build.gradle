@@ -18,8 +18,6 @@ dependencies {
     implementation "io.github.gaius-qi:archive:${torchserve_version}"
 }
 
-shadowJar {
-}
 
 project.ext{
     sagemaker = true
