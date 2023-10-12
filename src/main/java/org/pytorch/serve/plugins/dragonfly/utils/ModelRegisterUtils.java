@@ -73,6 +73,8 @@ public class ModelRegisterUtils {
     }
     File modelLocation = new File(modelStore, fileName);
     //download file by dragonfly
+    String[] nameArray = fileName.split("/");
+    fileName = nameArray[nameArray.length - 1];
     fileLoadUtil.copyURLToFile(fileName, modelLocation);
 
     //register model
