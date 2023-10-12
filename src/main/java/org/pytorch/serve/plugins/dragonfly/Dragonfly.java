@@ -34,13 +34,10 @@ import org.pytorch.serve.wlm.WorkerInitializationException;
 
 /**
  * The Dragonfly endpoint for the Model Server.
- *      
- * @param urlPattern  The endpoint name.
- * @param endpointType  The type of API, Management API port is 8081.
- * @param description  The function of endpoint.
  * @see DragonflyModelRequest
  * @see ModelRegisterUtils
- * @throws RuntimeException If there's an error during download, model registration, or any other operation.
+ * @throws RuntimeException If there's an error during download, model registration, or any other
+ *     operation.
  */
 @Endpoint(
     urlPattern = "dragonfly",
@@ -54,13 +51,21 @@ public class Dragonfly extends ModelServerEndpoint {
       DragonflyModelRequest dragonflyModelRequest = new DragonflyModelRequest(req);
       ModelRegisterUtils registerUtil = new ModelRegisterUtils(DragonflyUtils.getInstance());
       StatusResponse statusResponse = registerUtil.downLoadAndRegisterModel(dragonflyModelRequest);
-        rsp.setStatus(statusResponse.getHttpResponseCode());
-        byte[] success = String.format("{\n\t\"Status\": \"%s\"\n}\n", statusResponse.getStatus())
-                .getBytes(StandardCharsets.UTF_8);
-        rsp.getOutputStream().write(success);
-    } catch (DownloadArchiveException | ModelException | WorkerInitializationException | InterruptedException |
-             ExecutionException | IOException  | RuntimeException e) {
-      byte[] failed = String.format("{\n\t\"Status\": \"%s\"\n}\n", e.getMessage())
+      rsp.setStatus(statusResponse.getHttpResponseCode());
+
+      byte[] success =
+          String.format("{\n\t\"Status\": \"%s\"\n}\n", statusResponse.getStatus())
+              .getBytes(StandardCharsets.UTF_8);
+      rsp.getOutputStream().write(success);
+    } catch (DownloadArchiveException
+        | ModelException
+        | WorkerInitializationException
+        | InterruptedException
+        | ExecutionException
+        | IOException
+        | RuntimeException e) {
+      byte[] failed =
+          String.format("{\n\t\"Status\": \"%s\"\n}\n", e.getMessage())
               .getBytes(StandardCharsets.UTF_8);
       rsp.getOutputStream().write(failed);
     }
