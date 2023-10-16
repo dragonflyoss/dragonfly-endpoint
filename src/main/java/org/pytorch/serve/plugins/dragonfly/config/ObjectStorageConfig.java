@@ -48,7 +48,7 @@ public class ObjectStorageConfig {
   private String serviceAccountPath;
 
   // Endpoint of OSS.
-  @SerializedName("end_point")
+  @SerializedName("endpoint")
   private String endPoint;
 
   // Access key ID of OSS.
