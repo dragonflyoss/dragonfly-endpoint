@@ -165,9 +165,9 @@ public class DragonflyUtils implements FileLoadUtils {
     if (configPath == null) {
       String osType = System.getProperty("os.name").toUpperCase();
       if (osType.contains("LINUX")) {
-        configPath = linuxDefaultConfigPath + configFileName ;
+        configPath = linuxDefaultConfigPath + "/" + configFileName ;
       } else if (osType.contains("MAC")) {
-        configPath = System.getProperty("user.home") + darwinDefaultConfigPath + configFileName ;
+        configPath = System.getProperty("user.home") + darwinDefaultConfigPath + "/" + configFileName ;
       } else {
         logger.error("do not support os type :" + osType);
       }
