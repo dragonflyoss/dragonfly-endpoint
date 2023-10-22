@@ -165,16 +165,16 @@ public class DragonflyUtils implements FileLoadUtils {
     if (configPath == null) {
       String osType = System.getProperty("os.name").toUpperCase();
       if (osType.contains("LINUX")) {
-        configPath = linuxDefaultConfigPath ;
+        configPath = linuxDefaultConfigPath + "/" + configFileName ;
       } else if (osType.contains("MAC")) {
-        configPath = System.getProperty("user.home") + darwinDefaultConfigPath ;
+        configPath = System.getProperty("user.home") + darwinDefaultConfigPath + "/" + configFileName ;
       } else {
         logger.error("do not support os type :" + osType);
       }
     }
     try {
       Gson gson = new Gson();
-      JsonReader reader = new JsonReader(new FileReader(configPath + "/" + configFileName));
+      JsonReader reader = new JsonReader(new FileReader(configPath));
       dragonflyEndpointConfig = gson.fromJson(reader, DragonflyEndpointConfig.class);
       objectStorageConfig = dragonflyEndpointConfig.getObjectStorageConfig();
     } catch (JsonParseException e) {

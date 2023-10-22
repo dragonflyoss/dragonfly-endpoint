@@ -72,11 +72,13 @@ public class ModelRegisterUtils {
     if (modelStore == null) {
       throw new ModelNotFoundException("Model store has not been configured.");
     }
-    File modelLocation = new File(modelStore, fileName);
-    // download file by dragonfly
+    //download file by dragonfly
+    String[] nameArray = fileName.split("/");
+    String stripedFileName = nameArray[nameArray.length - 1];
+    File modelLocation = new File(modelStore, stripedFileName);
     fileLoadUtil.copyURLToFile(fileName, modelLocation);
 
-    // register model
+    //register model
     String modelName = dragonflyModelRequest.getModelName();
     String runtime = dragonflyModelRequest.getRuntime();
     String handler = dragonflyModelRequest.getHandler();
