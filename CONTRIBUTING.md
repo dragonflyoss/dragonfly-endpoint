@@ -1,4 +1,4 @@
-# Contributing to Dragonfly Client
+# Contributing to Dragonfly Endpoint
 
 It is warmly welcomed if you have the interest to hack on dragonfly-endpoint.
 First, we encourage this kind of willingness very much.
