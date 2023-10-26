@@ -54,7 +54,7 @@ public class DragonflyUtils implements FileLoadUtils {
 
   private static final Logger logger = LoggerFactory.getLogger(DragonflyUtils.class);
 
-  private static final String configFileName = "dragonfly_endpoint.json";
+  private static final String configFileName = "config.json";
 
   private String configPath;
 
