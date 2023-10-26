@@ -1,7 +1,7 @@
 # dragonfly-endpoint
 
 [![CI](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dragonflyoss/dragonfly-endpoint/actions/workflows/ci.yml)
-[![LICENSE](https://img.shields.io/github/license/dragonflyoss/Dragonfly2.svg?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/blob/main/LICENSE)
+[![LICENSE](https://img.shields.io/github/license/dragonflyoss/dragonfly-endpoint.svg?style=flat-square)](https://github.com/dragonflyoss/dragonfly-endpoint/blob/main/LICENSE)
 
 The TorchServe endpoint that downloads model via Dragonfly.
 
