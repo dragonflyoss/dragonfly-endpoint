@@ -66,7 +66,7 @@ jobs:
             GITVERSION=git-${{ steps.vars.outputs.git_revision }}
             VERSION=${{ steps.get_version.outputs.VERSION }}
           tags: |
-            dragonflyoss/torchserve-dragonfly:${{ steps.get_version.outputs.VERSION }}
-            ghcr.io/${{ env.IMAGE_REPOSITORY }}/torchserve-dragonfly:${{ steps.get_version.outputs.VERSION }}
+            dragonflyoss/dragonfly-endpoint:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ steps.get_version.outputs.VERSION }}
           push:
             true
