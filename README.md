@@ -7,7 +7,7 @@ The TorchServe endpoint that downloads model via Dragonfly.
 
 ## Documentation
 
-You can find the full documentation on the [d7y.io](https://d7y.io).
+You can find the full documentation on the [d7y.io](https://d7y.io/docs/next/setup/integration/torchserve).
 
 ## Community
 
