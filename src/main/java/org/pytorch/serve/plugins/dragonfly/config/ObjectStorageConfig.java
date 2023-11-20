@@ -49,7 +49,7 @@ public class ObjectStorageConfig {
 
   // Endpoint of OSS.
   @SerializedName("endpoint")
-  private String endPoint;
+  private String endpoint;
 
   // Access key ID of OSS.
   @SerializedName("access_key_id")
@@ -123,8 +123,8 @@ public class ObjectStorageConfig {
     return containerName;
   }
 
-  public String getEendPoint() {
-    return endPoint;
+  public String getEndpoint() {
+    return endpoint;
   }
 
   public String getAccessKeyId() {
