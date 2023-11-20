@@ -16,6 +16,7 @@
 
 package org.pytorch.serve.plugins.dragonfly.objectstorage;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 import org.pytorch.serve.plugins.dragonfly.config.ObjectStorageConfig;
@@ -27,20 +28,24 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 public class S3 implements ObjectStorage {
-
   private S3Presigner presigner;
 
   public S3(ObjectStorageConfig objectStorageConfig) {
+    String endpoint = objectStorageConfig.getEndpoint();
     String accessKey = objectStorageConfig.getAccessKey();
     String secretKey = objectStorageConfig.getSecretKey();
     Region region = Region.of(objectStorageConfig.getRegion());
-
     AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
-    presigner =
-        S3Presigner.builder()
-            .region(region)
-            .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-            .build();
+
+    S3Presigner.Builder builder = S3Presigner.builder();
+    builder.region(region);
+    builder.credentialsProvider(StaticCredentialsProvider.create(awsCreds));
+
+    if (endpoint == null || endpoint.isEmpty()) {
+      builder.endpointOverride(URI.create(endpoint));
+    }
+
+    presigner = builder.build();
   }
 
   @Override

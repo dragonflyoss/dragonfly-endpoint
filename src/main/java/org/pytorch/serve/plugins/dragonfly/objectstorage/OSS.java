@@ -27,11 +27,11 @@ public class OSS implements ObjectStorage {
 
   public OSS(ObjectStorageConfig objectStorageConfig) {
 
-    String endPoint = objectStorageConfig.getEendPoint();
+    String endpoint = objectStorageConfig.getEndpoint();
     String accessKeyId = objectStorageConfig.getAccessKeyId();
     String accessKeySecret = objectStorageConfig.getAccessKeySecret();
 
-    ossClient = new OSSClientBuilder().build(endPoint, accessKeyId, accessKeySecret);
+    ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
   }
 
   @Override
