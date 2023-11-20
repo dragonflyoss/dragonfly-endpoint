@@ -41,7 +41,7 @@ public class S3 implements ObjectStorage {
     builder.region(region);
     builder.credentialsProvider(StaticCredentialsProvider.create(awsCreds));
 
-    if (endpoint == null || endpoint.isEmpty()) {
+    if (endpoint != null && !endpoint.isEmpty()) {
       builder.endpointOverride(URI.create(endpoint));
     }
 
